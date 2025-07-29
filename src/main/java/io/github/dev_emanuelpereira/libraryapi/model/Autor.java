@@ -2,18 +2,20 @@ package io.github.dev_emanuelpereira.libraryapi.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "TBL_AUTOR")
+@Table(name = "TBL_AUTOR", schema = "public")
 @Data
 public class Autor {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "nome", length = 100, nullable = false)

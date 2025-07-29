@@ -3,6 +3,7 @@ package io.github.dev_emanuelpereira.libraryapi.repository;
 import io.github.dev_emanuelpereira.libraryapi.model.Autor;
 import io.github.dev_emanuelpereira.libraryapi.model.GeneroLivro;
 import io.github.dev_emanuelpereira.libraryapi.model.Livro;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
+@Transactional
 public class AutorRepositoryTest {
 
     @Autowired
@@ -43,12 +45,6 @@ public class AutorRepositoryTest {
             autorEncontrato.setNome("Emanuel Atualizado");
             repository.save(autorEncontrato);
         }
-    }
-
-    @Test
-    public void listarTest() {
-        List<Autor> lista = repository.findAll();
-        System.out.println(lista);
     }
 
     @Test
@@ -87,7 +83,7 @@ public class AutorRepositoryTest {
 
     @Test
     void mostrarLivrosPorAutorTest(){
-        var autor = repository.findById(1).get();
+        var autor = repository.findById(402).get();
 
         //buscar livros do autor
 
