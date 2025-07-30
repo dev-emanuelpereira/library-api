@@ -5,6 +5,9 @@ import io.github.dev_emanuelpereira.libraryapi.repository.AutorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AutorService {
@@ -14,4 +17,26 @@ public class AutorService {
     public Autor salvar(Autor autor) {
         return autorRepository.save(autor);
     }
+
+    public Optional<Autor> obterPorId(Integer id) {
+        return autorRepository.findById(id);
+    }
+
+    public void deletar(Autor autor) {
+        autorRepository.delete(autor);
+    }
+
+    public List<Autor> pesquisa (String nome, String nacionalidade) {
+        if (nome != null && nacionalidade != null){
+            return autorRepository.findByNomeAndNacionalidade(nome, nacionalidade);
+        }
+        if (nome != null) {
+            return autorRepository.findByNome(nome);
+        }
+        if (nacionalidade != null) {
+            return autorRepository.findByNacionalidade(nacionalidade);
+        }
+        return autorRepository.findAll();
+    }
+
 }

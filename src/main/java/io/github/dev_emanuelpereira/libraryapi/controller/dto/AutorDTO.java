@@ -5,6 +5,7 @@ import io.github.dev_emanuelpereira.libraryapi.model.Autor;
 import java.time.LocalDate;
 
 public record AutorDTO(
+        Integer id,
         String nome,
         LocalDate dataNascimento,
         String nacionalidade
