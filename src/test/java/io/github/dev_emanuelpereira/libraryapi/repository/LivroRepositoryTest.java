@@ -35,9 +35,9 @@ class LivroRepositoryTest {
 
         Autor autor = new Autor();
 
-        autor.setNome("Joao");
+        autor.setNome("Autor 1");
         autor.setNacionalidade("Brasileiro");
-        autor.setDataNascimento(LocalDate.of(2004, 1, 31));
+        autor.setDataNascimento(LocalDate.of(1978, 03, 01));
 
         autorRepository.save(autor);
 

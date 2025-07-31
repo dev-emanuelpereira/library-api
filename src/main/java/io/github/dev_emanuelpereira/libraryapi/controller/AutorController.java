@@ -1,8 +1,12 @@
 package io.github.dev_emanuelpereira.libraryapi.controller;
 
 import io.github.dev_emanuelpereira.libraryapi.controller.dto.AutorDTO;
+import io.github.dev_emanuelpereira.libraryapi.controller.dto.ErroResposta;
+import io.github.dev_emanuelpereira.libraryapi.exceptions.OperacaoNaoPermitidaException;
+import io.github.dev_emanuelpereira.libraryapi.exceptions.RegistroDuplicadoException;
 import io.github.dev_emanuelpereira.libraryapi.model.Autor;
 import io.github.dev_emanuelpereira.libraryapi.service.AutorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.apache.coyote.http11.filters.VoidInputFilter;
@@ -25,13 +29,19 @@ public class AutorController {
     private final AutorService autorService;
 
     @PostMapping
-    public ResponseEntity<Void> salvar(@RequestBody AutorDTO autorDTO) {
+    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDTO autorDTO) {
+        try {
         var autorEntidade = autorDTO.mapearParaAutor();
         autorService.salvar(autorEntidade);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(autorEntidade.getId()).toUri();
 
+        ErroResposta erro = ErroResposta.conflito("Autor ja cadastrado");
         return ResponseEntity.created(location).build();
+        } catch (RegistroDuplicadoException e) {
+            var erroDTO = ErroResposta.conflito(e.getMessage());
+            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
+        }
     }
 
     @GetMapping("/{id}")
@@ -51,7 +61,8 @@ public class AutorController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletar(@PathVariable("id") Integer id) {
+    public ResponseEntity<Object> deletar(@PathVariable("id") Integer id) {
+        try {
         Optional<Autor> autorOptional = autorService.obterPorId(id);
 
         if (autorOptional.isEmpty()) {
@@ -59,6 +70,10 @@ public class AutorController {
         }
         autorService.deletar(autorOptional.get());
         return ResponseEntity.noContent().build();
+        } catch (OperacaoNaoPermitidaException e) {
+            var erroDTO = ErroResposta.respostaPadrao(e.getMessage());
+            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
+        }
     }
 
     @GetMapping
@@ -77,9 +92,11 @@ public class AutorController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> atualizarAutor(
+    public ResponseEntity<Object> atualizarAutor(
             @PathVariable Integer id,
             @RequestBody AutorDTO dto) {
+        try {
+
         Optional<Autor> autorOptional = autorService.obterPorId(id);
 
         if (autorOptional.isEmpty()) {
@@ -95,6 +112,10 @@ public class AutorController {
         autorService.atualizar(autor);
 
         return ResponseEntity.noContent().build();
+        } catch (RegistroDuplicadoException e) {
+            var erroDTO = ErroResposta.conflito(e.getMessage());
+            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
+        }
     }
 }
 

@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface LivroRepository extends JpaRepository<Livro, Integer> {
 
+    boolean existsByAutor(Autor autor);
+
     List<Livro> findByAutor(Autor autor);
 
     List<Livro> findByTitulo(String titulo);
@@ -37,4 +39,6 @@ public interface LivroRepository extends JpaRepository<Livro, Integer> {
     @Transactional
     @Query(" delete from Livro where genero = ?1")
     void deleteByGenero(GeneroLivro generoLivro);
+
+
 }
