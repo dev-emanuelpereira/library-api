@@ -15,7 +15,7 @@ public record AutorDTO(
         String nome,
         @NotNull(message = "Campo obrigatório")
         @Size(min = 2, max = 100, message = "Campo fora do tamanho")
-        @Past(message = "Digite uma data de nascimento válida                                  ")
+        @Past(message = "Digite uma data de nascimento válida")
         LocalDate dataNascimento,
         @NotBlank(message = "Campo obrigatório")
         @Size(min = 2, max = 100, message = "Campo fora do tamanho")
