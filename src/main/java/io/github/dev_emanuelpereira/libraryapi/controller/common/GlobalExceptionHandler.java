@@ -2,7 +2,10 @@ package io.github.dev_emanuelpereira.libraryapi.controller.common;
 
 import io.github.dev_emanuelpereira.libraryapi.controller.dto.ErroCampo;
 import io.github.dev_emanuelpereira.libraryapi.controller.dto.ErroResposta;
+import io.github.dev_emanuelpereira.libraryapi.exceptions.OperacaoNaoPermitidaException;
+import io.github.dev_emanuelpereira.libraryapi.exceptions.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,5 +24,23 @@ public class GlobalExceptionHandler {
         List<FieldError> fieldErrors = e.getFieldErrors();
         List<ErroCampo> erroCampos = fieldErrors.stream().map(fe -> new ErroCampo(fe.getField(), fe.getDefaultMessage())).toList();
         return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro validação", erroCampos);
+    }
+
+    @ExceptionHandler(RegistroDuplicadoException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErroResposta handleRegistroDuplicadoException(RegistroDuplicadoException e) {
+        return ErroResposta.conflito(e.getMessage());
+    }
+
+    @ExceptionHandler(OperacaoNaoPermitidaException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErroResposta handleOperacaoNaoPermitidaException(OperacaoNaoPermitidaException e) {
+        return ErroResposta.respostaPadrao(e.getMessage());
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErroResposta handleGenericException(RuntimeException e){
+        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro inesperado. Tente novamente mais tarde!", List.of());
     }
 }

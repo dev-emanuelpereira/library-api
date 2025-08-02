@@ -2,9 +2,12 @@ package io.github.dev_emanuelpereira.libraryapi.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TBL_LIVRO", schema = "public")
@@ -38,5 +41,16 @@ public class Livro {
     )
     @JoinColumn(name = "id_autor")
     private Autor autor;
+
+    @Column
+    @CreatedDate
+    private LocalDateTime dataCadastro;
+
+    @Column
+    @LastModifiedDate
+    private LocalDateTime dataAtualizacao;
+
+    @Column
+    private Integer idUsuario;
 
 }
