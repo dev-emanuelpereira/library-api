@@ -71,7 +71,7 @@ public class AutorRepositoryTest {
         livro.setPreco(BigDecimal.valueOf(100));
         livro.setGenero(GeneroLivro.FANTASIA);
         livro.setTitulo("Magico Milionario");
-        livro.setData_publicacao(LocalDate.of(2025, 04, 20));
+        livro.setDataPublicacao(LocalDate.of(2025, 04, 20));
         livro.setAutor(autor);
 
         autor.setLivros(new ArrayList<>());
