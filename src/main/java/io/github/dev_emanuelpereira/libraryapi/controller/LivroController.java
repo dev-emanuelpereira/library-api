@@ -9,6 +9,7 @@ import io.github.dev_emanuelpereira.libraryapi.model.Livro;
 import io.github.dev_emanuelpereira.libraryapi.service.LivroService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -40,6 +41,16 @@ public class LivroController implements GenericController {
                 livro -> {
                     var dto = livroMapper.toDTO(livro);
                     return ResponseEntity.ok(dto);
+                }
+        ).orElseGet( () -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deletar(@PathVariable("id") Integer id) {
+        return livroService.obterPorId(id).map(
+                livro -> {
+                    livroService.deletar(livro);
+                    return ResponseEntity.noContent().build();
                 }
         ).orElseGet( () -> ResponseEntity.notFound().build());
     }
