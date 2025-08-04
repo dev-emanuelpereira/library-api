@@ -4,6 +4,7 @@ import io.github.dev_emanuelpereira.libraryapi.model.Autor;
 import io.github.dev_emanuelpereira.libraryapi.model.GeneroLivro;
 import io.github.dev_emanuelpereira.libraryapi.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface LivroRepository extends JpaRepository<Livro, Integer> {
+public interface LivroRepository extends JpaRepository<Livro, Integer>, JpaSpecificationExecutor<Livro>  {
 
     boolean existsByAutor(Autor autor);
 
