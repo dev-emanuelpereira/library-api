@@ -25,8 +25,8 @@ public class Livro {
     @Column(name = "titulo", length = 150, nullable = false)
     private String titulo;
 
-    @Column(name = "data_publicacao")
-    private LocalDate data_publicacao;
+    @Column(name = "dataPublicacao")
+    private LocalDate dataPublicacao;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "genero", length = 30, nullable = false)

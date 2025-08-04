@@ -27,7 +27,7 @@ class LivroRepositoryTest {
     void salvarTest(){
         Livro livro = new Livro();
 
-        livro.setData_publicacao(LocalDate.of(2025, 04, 20));
+        livro.setDataPublicacao(LocalDate.of(2025, 04, 20));
         livro.setGenero(GeneroLivro.BIOGRAFIA);
         livro.setIsbn("21412-1234");
         livro.setPreco(BigDecimal.valueOf(100));

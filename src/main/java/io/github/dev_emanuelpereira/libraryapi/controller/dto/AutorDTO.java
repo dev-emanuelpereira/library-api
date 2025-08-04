@@ -14,20 +14,9 @@ public record AutorDTO(
         @Size(min = 2, max = 100, message = "Campo fora do tamanho")
         String nome,
         @NotNull(message = "Campo obrigatório")
-        @Size(min = 2, max = 100, message = "Campo fora do tamanho")
         @Past(message = "Digite uma data de nascimento válida")
         LocalDate dataNascimento,
         @NotBlank(message = "Campo obrigatório")
         @Size(min = 2, max = 100, message = "Campo fora do tamanho")
         String nacionalidade
-) {
-    public Autor mapearParaAutor() {
-        Autor autor = new Autor();
-
-        autor.setNome(this.nome);
-        autor.setDataNascimento(this.dataNascimento);
-        autor.setNacionalidade(this.nacionalidade);
-        return autor;
-    }
-
-}
+){}
