@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LivroRepository extends JpaRepository<Livro, Integer>, JpaSpecificationExecutor<Livro>  {
 
@@ -41,4 +42,5 @@ public interface LivroRepository extends JpaRepository<Livro, Integer>, JpaSpeci
     @Query(" delete from Livro where genero = ?1")
     void deleteByGenero(GeneroLivro generoLivro);
 
+    Optional<Livro> findByIsbn(String isbn);
 }
