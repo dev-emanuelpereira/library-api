@@ -3,6 +3,7 @@ package io.github.dev_emanuelpereira.libraryapi.repository;
 import io.github.dev_emanuelpereira.libraryapi.model.Autor;
 import io.github.dev_emanuelpereira.libraryapi.model.GeneroLivro;
 import io.github.dev_emanuelpereira.libraryapi.model.Livro;
+import org.hibernate.query.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LivroRepository extends JpaRepository<Livro, Integer>, JpaSpecificationExecutor<Livro>  {
 
@@ -41,4 +43,5 @@ public interface LivroRepository extends JpaRepository<Livro, Integer>, JpaSpeci
     @Query(" delete from Livro where genero = ?1")
     void deleteByGenero(GeneroLivro generoLivro);
 
+    Optional<Livro> findByIsbn(String isbn);
 }

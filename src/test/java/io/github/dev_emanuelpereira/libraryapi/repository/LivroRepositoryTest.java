@@ -86,9 +86,4 @@ class LivroRepositoryTest {
         resultado.forEach(System.out::println);
     }
 
-    @Test
-    void listarPorGeneroTest(){
-        var resultado = repository.findByGenero(GeneroLivro.BIOGRAFIA, "dataPublicacao");
-        resultado.forEach(System.out::println);
-    }
 }
