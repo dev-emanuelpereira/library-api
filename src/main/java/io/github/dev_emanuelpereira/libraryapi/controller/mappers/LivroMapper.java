@@ -20,4 +20,5 @@ public abstract class LivroMapper {
 
     @Mapping(target = "generoLivro", source = "genero")
     public abstract ResultadoPesquisaLivroDTO toDTO(Livro livro);
+
 }
