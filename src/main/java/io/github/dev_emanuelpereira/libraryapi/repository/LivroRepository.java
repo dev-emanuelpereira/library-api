@@ -41,5 +41,4 @@ public interface LivroRepository extends JpaRepository<Livro, Integer>, JpaSpeci
     @Query(" delete from Livro where genero = ?1")
     void deleteByGenero(GeneroLivro generoLivro);
 
-
 }
