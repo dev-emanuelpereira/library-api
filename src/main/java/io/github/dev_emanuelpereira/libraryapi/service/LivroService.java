@@ -3,7 +3,7 @@ package io.github.dev_emanuelpereira.libraryapi.service;
 import io.github.dev_emanuelpereira.libraryapi.model.GeneroLivro;
 import io.github.dev_emanuelpereira.libraryapi.model.Livro;
 import io.github.dev_emanuelpereira.libraryapi.repository.LivroRepository;
-import io.github.dev_emanuelpereira.libraryapi.repository.LivroSpecs;
+import static io.github.dev_emanuelpereira.libraryapi.repository.LivroSpecs.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -30,24 +30,30 @@ public class LivroService {
     }
 
     public List<Livro> pesquisa(String isbn, String titulo, String nomeAutor, GeneroLivro genero, Integer anoPublicacao) {
-        Specification<Livro> specAula = Specification.where(
-                LivroSpecs.isbnEqual(isbn)
-                .and(LivroSpecs.tituloLike(titulo))
-                .and(LivroSpecs.generoEqual(genero))
-        );
+        //Specification<Livro> specAula = Specification.where(
+        //        isbnEqual(isbn)
+        //                .and(tituloLike(titulo))
+        //                .and(generoEqual(genero))
+        //);
 
 
         //conjunction é equivalente a select * from tananan where 0 = 0
         Specification<Livro> spec = Specification.where(((root, query, criteriaBuilder) -> criteriaBuilder.conjunction()));
 
         if(isbn != null) {
-            spec.and(LivroSpecs.isbnEqual(isbn));
+            spec.and(isbnEqual(isbn));
         }
         if (titulo != null)  {
-            spec.and(LivroSpecs.tituloLike(titulo));
+            spec.and(tituloLike(titulo));
         }
         if (genero != null)  {
-            spec.and(LivroSpecs.generoEqual(genero));
+            spec.and(generoEqual(genero));
+        }
+        if (anoPublicacao != null) {
+            spec.and(anoPublicacaoEqual(anoPublicacao));
+        }
+        if (nomeAutor != null) {
+            spec.and(nomeAutorLike(nomeAutor));
         }
         //root é a projecao da classe, os dados da query
         return livroRepository.findAll(spec);
