@@ -18,7 +18,7 @@ public class LivroValidator {
     private final LivroRepository livroRepository;
 
     public void validar(Livro livro){
-        if (existeLivroComIsbn()) {
+        if (existeLivroComIsbn(livro)) {
             throw new RegistroDuplicadoException("ISBN ja cadastrado");
         }
         if (isPrecoObrigatorioNulo(livro)) {
