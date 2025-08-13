@@ -19,4 +19,5 @@ public record AutorDTO(
         @NotBlank(message = "Campo obrigatório")
         @Size(min = 2, max = 100, message = "Campo fora do tamanho")
         String nacionalidade
+
 ){}

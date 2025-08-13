@@ -37,7 +37,6 @@ public class AutorController implements GenericController {
 
         var location = gerarHeaderLocation(autor.getId());
 
-        ErroResposta erro = ErroResposta.conflito("Autor ja cadastrado");
         return ResponseEntity.created(location).build();
     }
 
