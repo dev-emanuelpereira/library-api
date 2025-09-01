@@ -26,8 +26,11 @@ public class SecurityConfiguration {
                 //.formLogin(configurer -> configurer.loginPage("/login.html").successForwardUrl())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(authorize ->
-                        authorize.anyRequest().authenticated()
+                .authorizeHttpRequests(authorize -> {
+                            authorize.requestMatchers("/autores/**").hasRole("ADMIN");
+                            authorize.requestMatchers("livros/**").hasAnyRole("USER", "ADMIN");
+                            authorize.anyRequest().authenticated();
+                        }
                 )
                 .build();
     }
