@@ -43,6 +43,7 @@ public class Autor {
     @LastModifiedDate
     private LocalDateTime dataAtualizacao;
 
-    @Column
-    private Integer idUsuario;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 }

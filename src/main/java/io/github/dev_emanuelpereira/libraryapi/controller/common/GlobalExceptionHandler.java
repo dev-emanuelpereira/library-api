@@ -7,6 +7,7 @@ import io.github.dev_emanuelpereira.libraryapi.exceptions.OperacaoNaoPermitidaEx
 import io.github.dev_emanuelpereira.libraryapi.exceptions.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -51,5 +52,9 @@ public class GlobalExceptionHandler {
         return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro inesperado. Tente novamente mais tarde!", List.of());
     }
 
-
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErroResposta handleAcessDeniedException(AccessDeniedException e){
+        return new ErroResposta(HttpStatus.FORBIDDEN.value(), "Você não possui permissão para este módulo do sistema.", List.of());
+    }
 }

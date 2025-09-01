@@ -2,6 +2,7 @@ package io.github.dev_emanuelpereira.libraryapi.service;
 
 import io.github.dev_emanuelpereira.libraryapi.model.GeneroLivro;
 import io.github.dev_emanuelpereira.libraryapi.model.Livro;
+import io.github.dev_emanuelpereira.libraryapi.model.Usuario;
 import io.github.dev_emanuelpereira.libraryapi.repository.LivroRepository;
 import static io.github.dev_emanuelpereira.libraryapi.repository.LivroSpecs.*;
 
@@ -22,10 +23,13 @@ import java.util.Optional;
 public class LivroService {
 
     private final LivroRepository livroRepository;
+    private final SecurityService securityService;
     private final LivroValidator livroValidator;
 
     public Livro salvar(Livro livro){
         livroValidator.validar(livro);
+        Usuario usuario = securityService.obterUsuarioLogado();
+        livro.setUsuario(usuario);
         return livroRepository.save(livro);
 
     }
