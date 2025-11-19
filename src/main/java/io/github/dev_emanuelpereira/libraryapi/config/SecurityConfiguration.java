@@ -30,16 +30,18 @@ public class SecurityConfiguration {
                 //metodo utilizado para aplicacoes web
                 .csrf(AbstractHttpConfigurer::disable)
                 //.formLogin(configurer -> configurer.loginPage("/login.html").successForwardUrl())
-                .formLogin(configurer -> {
-                    configurer.loginPage("/login").permitAll();
-                })
+                //.formLogin(configurer -> {
+                //    configurer.loginPage("/login").permitAll();
+                //})
+                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
+                            authorize.requestMatchers("/login/**").permitAll();
                             authorize.requestMatchers(HttpMethod.POST,"/usuarios/**").permitAll();
                             authorize.anyRequest().authenticated();
                         }
                 )
-                //.oauth2Login(Customizer.withDefaults())
+                .oauth2Login(Customizer.withDefaults())
                 .build();
     }
 
@@ -53,7 +55,7 @@ public class SecurityConfiguration {
 //        return new GrantedAuthorityDefaults("");
 //    }
     @Bean
-//    public UserDetailsService userDetailsService(UsuarioService usuarioService) {
+    public UserDetailsService userDetailsService(UsuarioService usuarioService) {
 //        UserDetails user1 = User.builder()
 //                .username("usuario")
 //                .password(encoder.encode("123"))
@@ -67,6 +69,6 @@ public class SecurityConfiguration {
 //                .build();
 //        return new InMemoryUserDetailsManager(user1, user2);
 
-//        return new CustomUserDetailsService(usuarioService);
+        return new CustomUserDetailsService(usuarioService);
     }
-//}
+}

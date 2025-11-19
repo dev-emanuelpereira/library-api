@@ -29,7 +29,7 @@ public class LivroService {
     public Livro salvar(Livro livro){
         livroValidator.validar(livro);
         Usuario usuario = securityService.obterUsuarioLogado();
-        livro.setUsuario(usuario);
+        livro.setUsuario(usuario.getId());
         return livroRepository.save(livro);
 
     }

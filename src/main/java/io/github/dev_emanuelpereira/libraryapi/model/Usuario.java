@@ -22,6 +22,7 @@ public class Usuario {
     @Column
     private String senha;
 
+    //traduzir Array para o banco de dados
     @Type(ListArrayType.class)
     @Column(name = "roles", columnDefinition = "varchar[]")
     private List<String> roles;
