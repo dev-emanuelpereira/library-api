@@ -50,11 +50,13 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder(10);
     }
 
-//    @Bean
-//    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
-//        return new GrantedAuthorityDefaults("");
-//    }
+    //tirar prefixo ROLE
     @Bean
+    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        return new GrantedAuthorityDefaults("");
+    }
+
+    //@Bean
     public UserDetailsService userDetailsService(UsuarioService usuarioService) {
 //        UserDetails user1 = User.builder()
 //                .username("usuario")
@@ -70,5 +72,6 @@ public class SecurityConfiguration {
 //        return new InMemoryUserDetailsManager(user1, user2);
 
         return new CustomUserDetailsService(usuarioService);
-    }
+    };
+
 }

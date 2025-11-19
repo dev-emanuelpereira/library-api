@@ -20,6 +20,9 @@ public class Usuario {
     private String login;
 
     @Column
+    private String email;
+
+    @Column
     private String senha;
 
     //traduzir Array para o banco de dados
