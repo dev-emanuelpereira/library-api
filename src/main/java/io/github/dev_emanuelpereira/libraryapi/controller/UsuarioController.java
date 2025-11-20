@@ -3,6 +3,7 @@ package io.github.dev_emanuelpereira.libraryapi.controller;
 import io.github.dev_emanuelpereira.libraryapi.controller.dto.UsuarioDTO;
 import io.github.dev_emanuelpereira.libraryapi.controller.mappers.UsuarioMapper;
 import io.github.dev_emanuelpereira.libraryapi.service.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UsuarioController {
     private final UsuarioMapper mapper;
 
     @PostMapping
-    public ResponseEntity<HttpStatus> salvar(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<HttpStatus> salvar(@RequestBody @Valid UsuarioDTO usuarioDTO) {
         var usuario = mapper.toEntity(usuarioDTO);
         service.salvar(usuario);
         return ResponseEntity.ok(HttpStatus.CREATED);
