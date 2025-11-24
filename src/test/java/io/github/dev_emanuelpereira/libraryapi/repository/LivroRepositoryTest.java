@@ -27,7 +27,11 @@ class LivroRepositoryTest {
     void salvarTest(){
         Livro livro = new Livro();
 
+<<<<<<< HEAD
         livro.setDataPublicacao(LocalDate.of(2025, 04, 20));
+=======
+        livro.setData_publicacao(LocalDate.of(2025, 04, 20));
+>>>>>>> main
         livro.setGenero(GeneroLivro.BIOGRAFIA);
         livro.setIsbn("21412-1234");
         livro.setPreco(BigDecimal.valueOf(100));
@@ -86,4 +90,12 @@ class LivroRepositoryTest {
         resultado.forEach(System.out::println);
     }
 
+<<<<<<< HEAD
+=======
+    @Test
+    void listarPorGeneroTest(){
+        var resultado = repository.findByGenero(GeneroLivro.BIOGRAFIA, "dataPublicacao");
+        resultado.forEach(System.out::println);
+    }
+>>>>>>> main
 }

@@ -2,15 +2,21 @@ package io.github.dev_emanuelpereira.libraryapi.service;
 
 import io.github.dev_emanuelpereira.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import io.github.dev_emanuelpereira.libraryapi.model.Autor;
+<<<<<<< HEAD
 import io.github.dev_emanuelpereira.libraryapi.model.Usuario;
+=======
+>>>>>>> main
 import io.github.dev_emanuelpereira.libraryapi.repository.AutorRepository;
 import io.github.dev_emanuelpereira.libraryapi.repository.LivroRepository;
 import io.github.dev_emanuelpereira.libraryapi.validator.AutorValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+<<<<<<< HEAD
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+=======
+>>>>>>> main
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,13 +28,19 @@ public class AutorService {
 
     private final AutorRepository autorRepository;
     private final AutorValidator autorValidator;
+<<<<<<< HEAD
     private final SecurityService securityService;
+=======
+>>>>>>> main
     private final LivroRepository livroRepository;
 
     public Autor salvar(Autor autor) {
         autorValidator.validarAutor(autor);
+<<<<<<< HEAD
         Usuario usuario = securityService.obterUsuarioLogado();
         autor.setUsuario(usuario.getId());
+=======
+>>>>>>> main
         return autorRepository.save(autor);
     }
 

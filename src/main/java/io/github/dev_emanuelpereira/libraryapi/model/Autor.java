@@ -43,5 +43,10 @@ public class Autor {
     @LastModifiedDate
     private LocalDateTime dataAtualizacao;
 
+<<<<<<< HEAD
     private Integer usuario;
+=======
+    @Column
+    private Integer idUsuario;
+>>>>>>> main
 }

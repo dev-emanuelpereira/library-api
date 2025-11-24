@@ -2,6 +2,7 @@ package io.github.dev_emanuelpereira.libraryapi.controller.common;
 
 import io.github.dev_emanuelpereira.libraryapi.controller.dto.ErroCampo;
 import io.github.dev_emanuelpereira.libraryapi.controller.dto.ErroResposta;
+<<<<<<< HEAD
 import io.github.dev_emanuelpereira.libraryapi.exceptions.CampoInvalidoException;
 import io.github.dev_emanuelpereira.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import io.github.dev_emanuelpereira.libraryapi.exceptions.RegistroDuplicadoException;
@@ -9,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+=======
+import org.springframework.http.HttpStatus;
+>>>>>>> main
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,6 +32,7 @@ public class GlobalExceptionHandler {
         List<ErroCampo> erroCampos = fieldErrors.stream().map(fe -> new ErroCampo(fe.getField(), fe.getDefaultMessage())).toList();
         return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro validação", erroCampos);
     }
+<<<<<<< HEAD
 
     @ExceptionHandler(RegistroDuplicadoException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -58,4 +63,6 @@ public class GlobalExceptionHandler {
     public ErroResposta handleAcessDeniedException(AccessDeniedException e){
         return new ErroResposta(HttpStatus.FORBIDDEN.value(), "Você não possui permissão para este módulo do sistema.", List.of());
     }
+=======
+>>>>>>> main
 }

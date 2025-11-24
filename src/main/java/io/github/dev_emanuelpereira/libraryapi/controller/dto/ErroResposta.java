@@ -13,8 +13,11 @@ public record ErroResposta(Integer status, String mensagem, List<ErroCampo> erro
     public static ErroResposta conflito(String mensagem) {
         return new ErroResposta(HttpStatus.CONFLICT.value(), mensagem, List.of());
     }
+<<<<<<< HEAD
 
     public static ErroResposta erroGenerico(String mensagem, String exception) {
         return new ErroResposta(HttpStatus.BAD_REQUEST.value(), mensagem, List.of());
     }
+=======
+>>>>>>> main
 }
