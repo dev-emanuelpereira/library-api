@@ -73,13 +73,13 @@ public class SecurityConfiguration {
     //ignorar segurança para construir swagger
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers(
-              "/v2/api-docs/**",
+        return web -> web.ignoring().requestMatchers("/v2/api-docs/**",
                         "/v3/api-docs/**",
                         "/swagger-resources/**",
                         "/swagger-ui/index.html",
                         "/swagger-ui/**",
-                        "/webjars/**"
+                        "/webjars/**",
+                        "/actuator/**"
 
             );
     }
