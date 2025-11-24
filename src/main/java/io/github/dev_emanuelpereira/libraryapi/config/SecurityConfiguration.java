@@ -6,6 +6,7 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import io.github.dev_emanuelpereira.libraryapi.security.CustomUserDetailsService;
+import io.github.dev_emanuelpereira.libraryapi.security.JwtCustomAuthenticationFilter;
 import io.github.dev_emanuelpereira.libraryapi.security.LoginSocialSuccessHandler;
 import io.github.dev_emanuelpereira.libraryapi.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
@@ -24,8 +25,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -35,17 +38,17 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
 
+//Obtem token e autentica o usuario, valida informações
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true) //habilitar controle de permissao nos controllers
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, LoginSocialSuccessHandler successHandler) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, LoginSocialSuccessHandler successHandler, JwtCustomAuthenticationFilter jwtCustomAuthenticationFilter) throws Exception {
         return http
                 //metodo utilizado para aplicacoes web
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(configurer -> configurer.loginPage("/login.html").successForwardUrl("/"))
                 .formLogin(configurer -> {
                     configurer.loginPage("/login").permitAll();
                 })
@@ -62,6 +65,7 @@ public class SecurityConfiguration {
                     oauth2.successHandler(successHandler);
                 })
                 .oauth2ResourceServer(oauth2RS -> oauth2RS.jwt(Customizer.withDefaults()))
+                .addFilterAfter(jwtCustomAuthenticationFilter, BearerTokenAuthenticationFilter.class)//adicionar depois do filtro do Bearer
                 .build();
     }
 
@@ -110,6 +114,26 @@ public class SecurityConfiguration {
     @Bean
     public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+    }
+
+    @Bean
+    public AuthorizationServerSettings authorizationServerSettings() {
+        return AuthorizationServerSettings.builder()
+                //obter token
+                .tokenEndpoint("/oauth2/token")
+                //utilizado para consultar status do token
+                .tokenIntrospectionEndpoint("/oauth2/introspect")
+                //revogar token
+                .tokenRevocationEndpoint("/oauth2/revoke")
+                //authorization endpoint
+                .authorizationEndpoint("/oauth2/authorizate")
+                //informações do usuario OPEN ID CONNECT
+                .oidcUserInfoEndpoint("/oauth2/userinfo")
+                //obter chave publica para verificar a assinatura do token
+                .jwkSetEndpoint("/oauth2/jwks")
+                //logout
+                .oidcLogoutEndpoint("/oauth2/logout")
+                .build();
     }
 
     //@Bean
