@@ -8,6 +8,7 @@ import io.github.dev_emanuelpereira.libraryapi.exceptions.RegistroDuplicadoExcep
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,10 +47,10 @@ public class GlobalExceptionHandler {
         return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage(), List.of(new ErroCampo(e.getCampo(), e.getMessage())));
     }
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErroResposta handleGenericException(RuntimeException e){
-        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro inesperado. Tente novamente mais tarde!", List.of());
+    public ErroResposta handleGenericException(Exception e){
+        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro inesperado. Tente novamente mais tarde!", List.of(new ErroCampo("Exception", e.getMessage())));
     }
 
     @ExceptionHandler(AccessDeniedException.class)

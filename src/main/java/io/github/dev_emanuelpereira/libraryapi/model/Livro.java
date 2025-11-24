@@ -50,8 +50,6 @@ public class Livro {
     @LastModifiedDate
     private LocalDateTime dataAtualizacao;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    private Integer usuario;
 
 }

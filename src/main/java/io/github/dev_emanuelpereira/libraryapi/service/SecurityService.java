@@ -1,6 +1,7 @@
 package io.github.dev_emanuelpereira.libraryapi.service;
 
 import io.github.dev_emanuelpereira.libraryapi.model.Usuario;
+import io.github.dev_emanuelpereira.libraryapi.security.CustomAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +16,10 @@ public class SecurityService {
 
     public Usuario obterUsuarioLogado() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return usuarioService.obterPorLogin(userDetails.getUsername());
+        if(authentication instanceof CustomAuthentication customAuth) {
+            return customAuth.getUsuario();
+        }
+        return null;
 
     }
 }
