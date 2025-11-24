@@ -1,6 +1,7 @@
 package io.github.dev_emanuelpereira.libraryapi.controller.dto;
 
 import io.github.dev_emanuelpereira.libraryapi.model.Autor;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -8,6 +9,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
+@Schema(name = "Autor")
 public record AutorDTO(
         Integer id,
         @NotBlank(message = "Campo obrigatório")

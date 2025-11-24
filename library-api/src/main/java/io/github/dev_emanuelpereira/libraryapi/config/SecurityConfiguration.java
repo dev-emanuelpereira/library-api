@@ -73,17 +73,15 @@ public class SecurityConfiguration {
     //ignorar segurança para construir swagger
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> {
-              web.ignoring().requestMatchers(
-              "/v2/api-dosc/**",
-                        "/v3/api-dosc/**",
+        return web -> web.ignoring().requestMatchers(
+              "/v2/api-docs/**",
+                        "/v3/api-docs/**",
                         "/swagger-resources/**",
-                        "/swagger-ui.html",
+                        "/swagger-ui/index.html",
                         "/swagger-ui/**",
                         "/webjars/**"
 
             );
-        };
     }
 
     //tirar prefixo ROLE
