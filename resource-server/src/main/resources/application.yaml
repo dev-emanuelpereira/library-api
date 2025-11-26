@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+
+##INDICA QUAL SERA O AUTHENTICATION SERVER DE VALIDACAO
+spring:
+  application:
+    name: resource-server
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080
